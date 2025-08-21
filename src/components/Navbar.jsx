@@ -12,7 +12,7 @@ import IT_FLAG from "../sections/it.png";
 const links = [
   { to: "/", label: "About" },
   { to: "/resume", label: "Resume" },
-  { to: "/portfolio", label: "Portfolio" },
+  { to: "/portfolio", label: "Projects" },
   { to: "/contact", label: "Contact" },
 ];
 
