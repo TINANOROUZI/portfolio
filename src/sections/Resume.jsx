@@ -1,7 +1,7 @@
-// src/sections/Resume.jsx
 import { motion } from "framer-motion";
 import SectionTitle from "../components/SectionTitle.jsx";
 import Stat from "../components/Stat.jsx";
+import { useLang } from "../context/LangContext.jsx";
 
 function Slider({ value = 80 }) {
   return (
@@ -11,19 +11,54 @@ function Slider({ value = 80 }) {
   );
 }
 
-/* staggered animations for list items */
-const listVariants = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: 0.12, delayChildren: 0.1 },
-  },
-};
-const itemVariants = {
-  hidden: { opacity: 0, y: 10 },
-  show: { opacity: 1, y: 0 },
-};
+// staggered animations
+const listVariants = { hidden: {}, show: { transition: { staggerChildren: 0.12, delayChildren: 0.1 } } };
+const itemVariants = { hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } };
 
 export default function Resume() {
+  const { lang } = useLang();
+
+  const t = {
+    en: {
+      title: "Resume",
+      tech: "Software Skills",
+      langs: "Languages",
+      soft: "Personal Skills",
+      exp: "Experience",
+      edu: "Education",
+      eduText: "BSc in Computer Engineering (ongoing), Politecnico di Torino",
+      what: "What can I do?",
+      dev: "Development & Creative Skills",
+      hobbies: "Hobbies & Interests",
+      bullets: [
+        "Responsive Websites · Landing Pages",
+        "Portfolio Sites · Dashboards",
+        "Social Media Content Management",
+        "Photo/Video Editing for digital campaigns",
+        "Deploy (Netlify · Vercel · GitHub Pages)",
+      ],
+    },
+    it: {
+      title: "Curriculum",
+      tech: "Competenze software",
+      langs: "Lingue",
+      soft: "Competenze personali",
+      exp: "Esperienze",
+      edu: "Formazione",
+      eduText: "Laurea in Ingegneria Informatica (in corso), Politecnico di Torino",
+      what: "Cosa posso fare?",
+      dev: "Competenze di sviluppo e creative",
+      hobbies: "Hobby e interessi",
+      bullets: [
+        "Siti responsive · Landing page",
+        "Siti portfolio · Dashboard",
+        "Gestione contenuti social",
+        "Editing foto/video per campagne",
+        "Deploy (Netlify · Vercel · GitHub Pages)",
+      ],
+    },
+  }[lang];
+
   const software = [
     ["HTML", 90],
     ["CSS", 90],
@@ -33,76 +68,68 @@ export default function Resume() {
     ["Social Media Tools (Meta, LinkedIn, X, IG)", 70],
   ];
   const languages = [
-    ["English (Advanced)", 85],
-    ["Italian (Intermediate)", 70],
-    ["Persian (Native)", 100],
+    [lang === "it" ? "Inglese (Avanzato)" : "English (Advanced)", 85],
+    [lang === "it" ? "Italiano (Intermedio)" : "Italian (Intermediate)", 70],
+    [lang === "it" ? "Persiano (Madrelingua)" : "Persian (Native)", 100],
   ];
 
   return (
     <section id="resume" className="section pt-14 md:pt-20 scroll-mt-24">
-      {/* min-h + items-center keeps the card vertically centered and away from navbar */}
       <div className="min-h-[75vh] flex items-center">
         <div className="glass rounded-2xl p-6 md:p-10 w-full">
-          <SectionTitle>Resume</SectionTitle>
+          <SectionTitle>{t.title}</SectionTitle>
 
           <div className="grid md:grid-cols-3 gap-10">
-            {/* LEFT — Skills (staggered reveal) */}
-            <motion.div
-              variants={listVariants}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "-80px" }}
-              className="space-y-6"
-            >
-              <h3 className="font-semibold">Software Skills</h3>
-
+            {/* LEFT — Skills */}
+            <motion.div variants={listVariants} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-80px" }} className="space-y-6">
+              <h3 className="font-semibold">{t.tech}</h3>
               {software.map(([label, v]) => (
                 <motion.div key={label} variants={itemVariants}>
                   <div className="flex justify-between text-sm mb-1">
-                    <span className="text-sub">{label}</span>
-                    <span>{v}%</span>
+                    <span className="text-sub">{label}</span><span>{v}%</span>
                   </div>
                   <Slider value={v} />
                 </motion.div>
               ))}
 
-              <h3 className="font-semibold mt-8">Languages</h3>
-
+              <h3 className="font-semibold mt-8">{t.langs}</h3>
               {languages.map(([label, v]) => (
                 <motion.div key={label} variants={itemVariants}>
                   <div className="flex justify-between text-sm mb-1">
-                    <span className="text-sub">{label}</span>
-                    <span>{v}%</span>
+                    <span className="text-sub">{label}</span><span>{v}%</span>
                   </div>
                   <Slider value={v} />
                 </motion.div>
               ))}
 
-              <h3 className="font-semibold mt-8">Personal Skills</h3>
+              <h3 className="font-semibold mt-8">{t.soft}</h3>
               <motion.div variants={itemVariants} className="space-y-2">
-                <Stat label="Problem Solving" value="Strong" />
-                <Stat label="Communication" value="Good" />
-                <Stat label="Organisation" value="Strong" />
+                <Stat label={lang === "it" ? "Problem solving" : "Problem Solving"} value={lang === "it" ? "Ottimo" : "Strong"} />
+                <Stat label={lang === "it" ? "Comunicazione" : "Communication"} value={lang === "it" ? "Buono" : "Good"} />
+                <Stat label={lang === "it" ? "Organizzazione" : "Organisation"} value={lang === "it" ? "Ottimo" : "Strong"} />
               </motion.div>
             </motion.div>
 
             {/* MIDDLE — Experience */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.35 }}
-              className="space-y-6"
-            >
-              <h3 className="font-semibold">Experience</h3>
+            <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.35 }} className="space-y-6">
+              <h3 className="font-semibold">{t.exp}</h3>
               <ol className="relative border-s border-white/10 pl-6">
-                {[
-                  ["Freelance Web Developer", "Built and deployed websites for small businesses (React, Tailwind, Netlify/Vercel)."],
-                  ["Social Media Manager", "Managed Instagram, LinkedIn, and Facebook pages. Created posts, optimized content, and tracked analytics."],
-                  ["Content Creator", "Edited photos and videos for brand campaigns using Adobe Photoshop, Premiere, and Canva."],
-                  ["Personal Portfolio Projects", "Responsive UIs with React, Framer Motion, and API integrations."],
-                  ["University Projects", "Python/Java coursework: algorithms, basic backend and data handling."],
-                ].map(([title, desc], i) => (
+                {(lang === "it"
+                  ? [
+                      ["Sviluppatrice Web Freelance", "Siti per piccole attività (React, Tailwind, Netlify/Vercel)."],
+                      ["Social Media Manager", "Pianificazione e creazione post per Instagram, LinkedIn e Facebook; analisi KPI."],
+                      ["Content Creator", "Editing foto e video per campagne digitali (Photoshop, Premiere, Canva)."],
+                      ["Progetti Portfolio", "UI responsive con React, Framer Motion e integrazioni API."],
+                      ["Progetti universitari", "Python/Java: algoritmi, basi di backend e gestione dati."],
+                    ]
+                  : [
+                      ["Freelance Web Developer", "Built and deployed websites for small businesses (React, Tailwind, Netlify/Vercel)."],
+                      ["Social Media Manager", "Managed Instagram, LinkedIn, and Facebook pages. Created posts and tracked analytics."],
+                      ["Content Creator", "Edited photos/videos for digital campaigns (Photoshop, Premiere, Canva)."],
+                      ["Portfolio Projects", "Responsive UIs with React, Framer Motion, API integrations."],
+                      ["University Projects", "Python/Java coursework: algorithms, backend basics, data handling."],
+                    ]
+                ).map(([title, desc], i) => (
                   <li key={i} className="mb-6">
                     <div className="absolute -left-2 top-1.5 h-4 w-4 rounded-full bg-accent/40 border border-accent" />
                     <div className="font-medium">{title}</div>
@@ -111,49 +138,37 @@ export default function Resume() {
                 ))}
               </ol>
 
-              <h3 className="font-semibold mt-10">Education</h3>
-              <p className="text-sm">
-                BSc in Computer Engineering (ongoing), Politecnico di Torino
-              </p>
+              <h3 className="font-semibold mt-10">{t.edu}</h3>
+              <p className="text-sm">{t.eduText}</p>
             </motion.div>
 
             {/* RIGHT — What I do */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.35, delay: 0.05 }}
-              className="space-y-8"
-            >
+            <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.35, delay: 0.05 }} className="space-y-8">
               <div>
-                <h3 className="font-semibold">What can I do?</h3>
+                <h3 className="font-semibold">{t.what}</h3>
                 <ul className="mt-3 space-y-2 text-sm text-sub">
-                  <li>Responsive Websites · Landing Pages</li>
-                  <li>Portfolio Sites · Dashboards</li>
-                  <li>Social Media Content Management</li>
-                  <li>Photo/Video Editing for digital campaigns</li>
-                  <li>Deploy (Netlify · Vercel · GitHub Pages)</li>
+                  {t.bullets.map((b) => <li key={b}>{b}</li>)}
                 </ul>
               </div>
 
               <div>
-                <h3 className="font-semibold">Development & Creative Skills</h3>
+                <h3 className="font-semibold">{t.dev}</h3>
                 <ul className="mt-3 space-y-2 text-sm text-sub">
                   <li>HTML · CSS · JavaScript · React</li>
                   <li>Tailwind CSS · Framer Motion</li>
-                  <li>Photo Editing: Photoshop · Canva</li>
-                  <li>Video Editing: Premiere Pro · CapCut</li>
-                  <li>Social Media Strategy · Content Creation</li>
+                  <li>{lang === "it" ? "Editing foto: Photoshop · Canva" : "Photo Editing: Photoshop · Canva"}</li>
+                  <li>{lang === "it" ? "Editing video: Premiere Pro · CapCut" : "Video Editing: Premiere Pro · CapCut"}</li>
+                  <li>{lang === "it" ? "Strategia social · Content creation" : "Social Media Strategy · Content Creation"}</li>
                 </ul>
               </div>
 
               <div>
-                <h3 className="font-semibold">Hobbies & Interests</h3>
+                <h3 className="font-semibold">{t.hobbies}</h3>
                 <ul className="mt-3 space-y-2 text-sm text-sub">
-                  <li>UI/UX design exploration</li>
-                  <li>Building side projects</li>
-                  <li>Social media trends & digital marketing</li>
-                  <li>Photography · Travel</li>
+                  <li>{lang === "it" ? "Esplorazione UI/UX" : "UI/UX design exploration"}</li>
+                  <li>{lang === "it" ? "Side projects" : "Building side projects"}</li>
+                  <li>{lang === "it" ? "Trend social & digital marketing" : "Social media trends & digital marketing"}</li>
+                  <li>{lang === "it" ? "Fotografia · Viaggi" : "Photography · Travel"}</li>
                 </ul>
               </div>
             </motion.div>
@@ -163,4 +178,3 @@ export default function Resume() {
     </section>
   );
 }
-
