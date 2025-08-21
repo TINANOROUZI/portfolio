@@ -9,12 +9,19 @@ import { useLang } from "../context/LangContext.jsx";
 import EN_FLAG from "../sections/eng.png";
 import IT_FLAG from "../sections/it.png";
 
-const links = [
-  { to: "/", label: "About" },
-  { to: "/resume", label: "Resume" },
-  { to: "/portfolio", label: "Projects" },
-  { to: "/contact", label: "Contact" },
+/** routes keyed for i18n */
+const ROUTES = [
+  { to: "/", key: "about" },
+  { to: "/resume", key: "resume" },
+  { to: "/portfolio", key: "projects" },
+  { to: "/contact", key: "contact" },
 ];
+
+/** nav labels per language */
+const NAV_LABELS = {
+  en: { about: "About", resume: "Resume", projects: "Projects", contact: "Contact" },
+  it: { about: "Chi sono", resume: "Curriculum", projects: "Progetti", contact: "Contatti" },
+};
 
 const FLAGS = { en: EN_FLAG, it: IT_FLAG };
 const LABELS = { en: "EN", it: "IT" };
@@ -38,6 +45,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const toggle = (v) => setOpen(typeof v === "boolean" ? v : !open);
   const { lang, setLang } = useLang();
+  const labels = NAV_LABELS[lang];
 
   // desktop dropdown state
   const [langOpen, setLangOpen] = useState(false);
@@ -84,9 +92,9 @@ export default function Navbar() {
 
             {/* Desktop nav */}
             <nav className="hidden md:flex items-center gap-6">
-              {links.map((l) => (
+              {ROUTES.map((l) => (
                 <NavLink key={l.to} to={l.to} className={activeClass}>
-                  {l.label}
+                  {labels[l.key]}
                 </NavLink>
               ))}
 
@@ -181,14 +189,14 @@ export default function Navbar() {
 
               {/* Mobile links */}
               <nav className="flex flex-col gap-4 text-lg">
-                {links.map((l) => (
+                {ROUTES.map((l) => (
                   <NavLink
                     key={l.to}
                     to={l.to}
                     onClick={() => toggle(false)}
                     className={activeClass}
                   >
-                    {l.label}
+                    {labels[l.key]}
                   </NavLink>
                 ))}
               </nav>
