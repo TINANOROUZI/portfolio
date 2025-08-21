@@ -1,103 +1,127 @@
-import { useState } from "react";
-import { Mail, Linkedin, Phone, Send } from "lucide-react";
+import { motion } from "framer-motion";
+import SectionTitle from "../components/SectionTitle.jsx";
+import { Mail, Linkedin, Github, Instagram } from "lucide-react";
+
+/* stagger setup */
+const list = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.12, delayChildren: 0.08 } },
+};
+const item = {
+  hidden: { opacity: 0, y: 12 },
+  show: { opacity: 1, y: 0 },
+};
 
 export default function ContactPage() {
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
-
-  const onChange = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    const subject = encodeURIComponent(`Portfolio Contact — ${form.name || "No name"}`);
-    const body = encodeURIComponent(
-      `Name: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`
-    );
-    // Sends via email client (no backend needed)
-    window.location.href = `mailto:tinanorouzi14@email.com?subject=${subject}&body=${body}`;
-  };
-
   return (
-    <div className="section">
-      <div className="grid md:grid-cols-3 gap-8">
-        {/* Form */}
-        <div className="md:col-span-2 glass rounded-2xl p-6 md:p-10">
-          <h2 className="text-xl tracking-widest text-sub font-semibold uppercase mb-6">
-            Contact
-          </h2>
+    <section id="contact" className="section pt-14 md:pt-20 scroll-mt-24">
+      {/* keeps the whole contact card centered on the page */}
+      <div className="min-h-[75vh] flex items-center">
+        <div className="glass rounded-2xl p-6 md:p-10 w-full">
+          <SectionTitle>Contact</SectionTitle>
 
-          <form onSubmit={onSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm text-sub mb-1" htmlFor="name">Name</label>
-              <input
-                id="name"
-                name="name"
-                value={form.name}
-                onChange={onChange}
-                placeholder="Your name"
-                className="w-full rounded-xl bg-white/5 border border-border p-3 outline-none"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm text-sub mb-1" htmlFor="email">Email</label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                value={form.email}
-                onChange={onChange}
-                placeholder="you@example.com"
-                className="w-full rounded-xl bg-white/5 border border-border p-3 outline-none"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm text-sub mb-1" htmlFor="message">Message</label>
-              <textarea
-                id="message"
-                name="message"
-                value={form.message}
-                onChange={onChange}
-                placeholder="Tell me about your project…"
-                rows={6}
-                className="w-full rounded-xl bg-white/5 border border-border p-3 outline-none resize-y"
-                required
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="px-5 py-2.5 rounded-full bg-accent/20 hover:bg-accent/30 border border-accent/40 transition inline-flex items-center gap-2"
+          <div className="grid md:grid-cols-2 gap-10">
+            {/* Left: form (staggered fields) */}
+            <motion.form
+              variants={list}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-80px" }}
+              onSubmit={(e) => e.preventDefault()}
+              className="space-y-4"
             >
-              <Send size={16} />
-              Send
-            </button>
-          </form>
-        </div>
+              <motion.div variants={item} className="space-y-2">
+                <label className="text-sm text-sub">Name</label>
+                <input
+                  type="text"
+                  placeholder="Your name"
+                  className="w-full rounded-lg bg-white/5 border border-border px-3 py-2 outline-none focus:border-white/40"
+                />
+              </motion.div>
 
-        {/* Contact info */}
-        <div className="glass rounded-2xl p-6 md:p-10 space-y-4">
-          <h3 className="font-semibold">Contact Info</h3>
-          <a href="mailto:tinanorouzi14@email.com" className="link flex items-center gap-3">
-            <Mail size={18} /> Email
-          </a>
-          <a href="https://www.linkedin.com/in/tinanorouzimoghaddam?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" rel="noopener noreferrer" className="link flex items-center gap-3">
-            <Linkedin size={18} /> LinkedIn
-          </a>
-          <a href="tel:+393342896512" className="link flex items-center gap-3">
-            <Phone size={18} /> Phone
-          </a>
-          <a href="https://t.me/tinanoruzi" target="_blank" rel="noopener noreferrer" className="link flex items-center gap-3">
-            <Send size={18} /> Telegram
-          </a>
+              <motion.div variants={item} className="space-y-2">
+                <label className="text-sm text-sub">Email</label>
+                <input
+                  type="email"
+                  placeholder="you@example.com"
+                  className="w-full rounded-lg bg-white/5 border border-border px-3 py-2 outline-none focus:border-white/40"
+                />
+              </motion.div>
 
-          <div className="pt-4 text-sm text-sub">
-            Torino, Italy — 10136
+              <motion.div variants={item} className="space-y-2">
+                <label className="text-sm text-sub">Message</label>
+                <textarea
+                  rows="5"
+                  placeholder="Tell me about your project..."
+                  className="w-full rounded-lg bg-white/5 border border-border px-3 py-2 outline-none focus:border-white/40 resize-none"
+                />
+              </motion.div>
+
+              <motion.div variants={item}>
+                <button
+                  type="submit"
+                  className="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/15 border border-border transition"
+                >
+                  Send
+                </button>
+              </motion.div>
+            </motion.form>
+
+            {/* Right: contact info + links (staggered) */}
+            <motion.div
+              variants={list}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-80px" }}
+              className="space-y-4"
+            >
+              <motion.p variants={item} className="text-sub">
+                I’m available for freelance work and collaborations. Reach out via email
+                or any of the platforms below.
+              </motion.p>
+
+              <motion.a
+                variants={item}
+                href="mailto:tinanorouzi14@email.com"
+                className="inline-flex items-center gap-2 link"
+              >
+                <Mail className="h-4 w-4" />
+                tinanorouzi14@email.com
+              </motion.a>
+
+              <motion.div variants={item} className="flex gap-3 pt-2">
+                <a
+                  className="inline-flex items-center justify-center h-10 w-10 rounded-full border border-border bg-white/5 hover:bg-white/10 transition"
+                  href="https://www.linkedin.com/in/your-handle"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin className="h-[18px] w-[18px]" />
+                </a>
+                <a
+                  className="inline-flex items-center justify-center h-10 w-10 rounded-full border border-border bg-white/5 hover:bg-white/10 transition"
+                  href="https://github.com/your-handle"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub"
+                >
+                  <Github className="h-[18px] w-[18px]" />
+                </a>
+                <a
+                  className="inline-flex items-center justify-center h-10 w-10 rounded-full border border-border bg-white/5 hover:bg-white/10 transition"
+                  href="https://www.instagram.com/your-handle"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="h-[18px] w-[18px]" />
+                </a>
+              </motion.div>
+            </motion.div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
