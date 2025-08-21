@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: dark; }
+body {
+  @apply bg-bg text-text min-h-dvh antialiased selection:bg-accent/30 selection:text-text;
+  background-image:
+    radial-gradient(1200px 600px at 10% -10%, rgba(91,157,255,.12), transparent 60%),
+    radial-gradient(800px 400px at 100% 10%, rgba(91,157,255,.08), transparent 55%);
+}
+.glass { @apply bg-card border border-border backdrop-blur-xs shadow-soft; }
+.link { @apply text-sub hover:text-text transition-colors; }
+.section { @apply w-full max-w-6xl mx-auto px-4 md:px-6; }
