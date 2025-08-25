@@ -22,20 +22,18 @@ const items = [
     desc_en: "A dashboard interface for managing and monitoring social media activity.",
     desc_it: "Una dashboard per gestire e monitorare l'attività sui social media.",
   },
-  // NEW: Spark English Kids
   {
     id: 3,
     title: "Spark English Kids",
-    img: "/assets/spark-english.jpg", // <- add this file to /assets
+    img: "/assets/spark-english.jpg", // <-- add this file in public/assets
     link: "https://spark-english-kids.netlify.app/",
     desc_en: "Fun English-learning website for kids with activities and clean UI.",
     desc_it: "Sito per l'apprendimento dell'inglese per bambini con attività e interfaccia pulita.",
   },
-  // NEW: 24hr Stories
   {
     id: 4,
     title: "24hr Stories",
-    img: "/assets/24hr-stories.jpg", // <- add this file to /assets
+    img: "/assets/24hr-stories.jpg", // <-- add this file in public/assets
     link: "https://24hr-stories-tina.netlify.app/",
     desc_en: "A minimal web app for creating 24-hour stories with a smooth UX.",
     desc_it: "Web app minimale per creare storie di 24 ore con UX fluida.",
@@ -66,11 +64,10 @@ export default function Portfolio() {
                 className="rounded-xl overflow-hidden bg-white/5 border border-border"
               >
                 <div className="aspect-[4/3] overflow-hidden">
-                  {/* grayscale ensures black & white; remove hover:grayscale-0 if you want always B/W */}
                   <img
                     src={it.img}
                     alt={it.title}
-                    className="w-full h-full object-cover transition-transform duration-500 filter grayscale"
+                    className="w-full h-full object-cover transition-transform duration-500 filter grayscale hover:grayscale-0"
                     loading="lazy"
                   />
                 </div>
