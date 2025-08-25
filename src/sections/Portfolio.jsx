@@ -22,6 +22,24 @@ const items = [
     desc_en: "A dashboard interface for managing and monitoring social media activity.",
     desc_it: "Una dashboard per gestire e monitorare l'attività sui social media.",
   },
+  // NEW: Spark English Kids
+  {
+    id: 3,
+    title: "Spark English Kids",
+    img: "/assets/spark-english.jpg", // <- add this file to /assets
+    link: "https://spark-english-kids.netlify.app/",
+    desc_en: "Fun English-learning website for kids with activities and clean UI.",
+    desc_it: "Sito per l'apprendimento dell'inglese per bambini con attività e interfaccia pulita.",
+  },
+  // NEW: 24hr Stories
+  {
+    id: 4,
+    title: "24hr Stories",
+    img: "/assets/24hr-stories.jpg", // <- add this file to /assets
+    link: "https://24hr-stories-tina.netlify.app/",
+    desc_en: "A minimal web app for creating 24-hour stories with a smooth UX.",
+    desc_it: "Web app minimale per creare storie di 24 ore con UX fluida.",
+  },
 ];
 
 export default function Portfolio() {
@@ -34,16 +52,37 @@ export default function Portfolio() {
         <div className="glass rounded-2xl p-6 md:p-10 w-full">
           <SectionTitle>{t.title}</SectionTitle>
 
-          <motion.div variants={list} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-80px" }} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <motion.div
+            variants={list}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-80px" }}
+            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
             {items.map((it) => (
-              <motion.article key={it.id} variants={item} className="rounded-xl overflow-hidden bg-white/5 border border-border">
+              <motion.article
+                key={it.id}
+                variants={item}
+                className="rounded-xl overflow-hidden bg-white/5 border border-border"
+              >
                 <div className="aspect-[4/3] overflow-hidden">
-                  <img src={it.img} alt={it.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+                  {/* grayscale ensures black & white; remove hover:grayscale-0 if you want always B/W */}
+                  <img
+                    src={it.img}
+                    alt={it.title}
+                    className="w-full h-full object-cover transition-transform duration-500 filter grayscale"
+                    loading="lazy"
+                  />
                 </div>
                 <div className="p-4">
                   <h4 className="font-medium">{it.title}</h4>
                   <p className="text-sub text-sm mt-1">{lang === "en" ? it.desc_en : it.desc_it}</p>
-                  <a href={it.link} target="_blank" rel="noopener noreferrer" className="link text-sm inline-block mt-2">
+                  <a
+                    href={it.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="link text-sm inline-block mt-2"
+                  >
                     {t.view}
                   </a>
                 </div>
