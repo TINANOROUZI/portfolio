@@ -41,7 +41,7 @@ const items = [
   {
     id: 3,
     title: "Nutrition Tracker",
-    img: "/assets/nutrition.jpg", // <-- put your B/W background image here
+    img: nutritionImg,
     link: "https://nutritiontracker-tina.netlify.app/about",
     desc_en: "Track foods and nutrients with a clean UI. Built with React & Tailwind.",
     desc_it: "Traccia alimenti e nutrienti con un'interfaccia pulita. Sviluppato con React e Tailwind.",
