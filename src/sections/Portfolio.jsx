@@ -39,21 +39,14 @@ const items = [
     desc_it: "Web app minimale per creare storie di 24 ore con UX fluida.",
   },
   {
-    id: 3,
+    id: 5,
     title: "Nutrition Tracker",
     img: "/assets/nutrition.jpg", // <-- put your B/W background image here
     link: "https://nutritiontracker-tina.netlify.app/about",
     desc_en: "Track foods and nutrients with a clean UI. Built with React & Tailwind.",
     desc_it: "Traccia alimenti e nutrienti con un'interfaccia pulita. Sviluppato con React e Tailwind.",
   },
-   {
-    id: 3,
-    title: "Nutrition Tracker",
-    img: pub("/assets/nutrition.jpg"), // <-- your image in public/assets
-    link: "https://nutritiontracker-tina.netlify.app/about",
-    desc_en: "Track foods and nutrients with a clean UI. Built with React & Tailwind.",
-    desc_it: "Traccia alimenti e nutrienti con un'interfaccia pulita. Sviluppato con React e Tailwind.",
-  },
+  
 ];
 
 export default function Portfolio() {
