@@ -24,19 +24,11 @@ const items = [
   },
   {
     id: 3,
-    title: "Spark English Kids",
-    img: "/assets/spark-english.jpg", // <-- add this file in public/assets
-    link: "https://spark-english-kids.netlify.app/",
-    desc_en: "Fun English-learning website for kids with activities and clean UI.",
-    desc_it: "Sito per l'apprendimento dell'inglese per bambini con attività e interfaccia pulita.",
-  },
-  {
-    id: 4,
-    title: "24hr Stories",
-    img: "/assets/24hr-stories.jpg", // <-- add this file in public/assets
-    link: "https://24hr-stories-tina.netlify.app/",
-    desc_en: "A minimal web app for creating 24-hour stories with a smooth UX.",
-    desc_it: "Web app minimale per creare storie di 24 ore con UX fluida.",
+    title: "Nutrition Tracker",
+    img: "/assets/nutrition.jpg", // <-- put your B/W background image here
+    link: "https://nutritiontracker-tina.netlify.app/about",
+    desc_en: "Track foods and nutrients with a clean UI. Built with React & Tailwind.",
+    desc_it: "Traccia alimenti e nutrienti con un'interfaccia pulita. Sviluppato con React e Tailwind.",
   },
 ];
 
@@ -67,13 +59,16 @@ export default function Portfolio() {
                   <img
                     src={it.img}
                     alt={it.title}
-                    className="w-full h-full object-cover transition-transform duration-500 filter grayscale hover:grayscale-0"
+                    /* black & white image (color on hover) */
+                    className="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-500"
                     loading="lazy"
                   />
                 </div>
                 <div className="p-4">
                   <h4 className="font-medium">{it.title}</h4>
-                  <p className="text-sub text-sm mt-1">{lang === "en" ? it.desc_en : it.desc_it}</p>
+                  <p className="text-sub text-sm mt-1">
+                    {lang === "en" ? it.desc_en : it.desc_it}
+                  </p>
                   <a
                     href={it.link}
                     target="_blank"
